@@ -2,7 +2,7 @@
 
 ## Estado General
 
-- **Fase Actual:** Fase 2 (Dominio y Casos de Uso - Arquitectura Limpia)
+- **Fase Actual:** Fase 3 (API de Catálogo)
 - **Repositorio objetivo:** `https://github.com/ju4nd3r/cinetickets`
 - **Estado CI:** Fase 0 en verde
 
@@ -34,11 +34,11 @@
 
 ### Fase 2: Dominio y Casos de Uso (Arquitectura Limpia)
 
-- [ ] Capa `domain` pura (entidades, reglas de precio en centavos, cargo de servicio 5%, descuentos por tipo de ticket, reglas de asientos máx 10, máquina de estados de orden).
-- [ ] Capa `application` (casos de uso: búsqueda, funciones, mapa de asientos, holds, órdenes, pago, consulta).
-- [ ] Puertos e interfaces (`MovieRepository`, `ShowtimeRepository`, `SeatHoldStore`, `OrderRepository`, `PaymentGateway`, `Clock`).
-- [ ] Dobles en memoria y FakeClock para pruebas unitarias.
-- [ ] Pruebas unitarias completas con Vitest (cobertura ≥85% en `domain` y `application`).
+- [x] Capa `domain` pura (entidades, reglas de precio en centavos, cargo de servicio 5%, descuentos por tipo de ticket, reglas de asientos máx 10, máquina de estados de orden).
+- [x] Capa `application` (casos de uso: búsqueda, funciones, mapa de asientos, holds, órdenes, pago, consulta).
+- [x] Puertos e interfaces (`MovieRepository`, `ShowtimeRepository`, `SeatHoldStore`, `OrderRepository`, `PaymentGateway`, `Clock`).
+- [x] Dobles en memoria y FakeClock para pruebas unitarias.
+- [x] Pruebas unitarias completas con Vitest (cobertura alcanzada: 96.3% en Stmts/Lines, 90.15% en Branches, 100% en Funcs, superando el umbral de 85%).
 
 ### Fase 3: API de Catálogo
 
