@@ -2,9 +2,9 @@
 
 ## Estado General
 
-- **Fase Actual:** Fase 1 (Contrato Compartido y Modelo de Datos)
+- **Fase Actual:** Fase 2 (Dominio y Casos de Uso - Arquitectura Limpia)
 - **Repositorio objetivo:** `https://github.com/ju4nd3r/cinetickets`
-- **Estado CI:** Configurado y listo para primer push
+- **Estado CI:** Fase 0 en verde
 
 ---
 
@@ -25,12 +25,12 @@
 
 ### Fase 1: Contrato Compartido y Modelo de Datos
 
-- [ ] Esquemas Zod y tipos TypeScript en `packages/shared` (películas, cines, salas, asientos, funciones, comida, órdenes, pagos).
-- [ ] `schema.prisma` completo con relaciones e índices únicos (`UNIQUE(showtimeId, seatId)`).
-- [ ] Migraciones iniciales de Prisma.
-- [ ] Script de seed reproducible e idempotente (`seed = 42`, ≥12 películas, 3 cines, 2-3 salas/cine, 4-6 funciones/día por 7 días, ≥15 productos de comida, usuario demo).
-- [ ] Pruebas unitarias de esquemas Zod en `shared` y determinismo del seed.
-- [ ] Verificación de aceptación: Base de datos poblada de forma consistente tras `docker compose up`.
+- [x] Esquemas Zod y tipos TypeScript en `packages/shared` (películas, cines, salas, asientos, funciones, comida, órdenes, pagos).
+- [x] `schema.prisma` completo con relaciones e índices únicos (`UNIQUE(showtimeId, seatId)`).
+- [x] Migraciones iniciales de Prisma (`20261005221553_init_models`).
+- [x] Script de seed reproducible e idempotente (`seed = 42`, 12 películas completas, 3 cines, 8 salas, 388 funciones en 7 días, 16 productos de comida, usuario demo).
+- [x] Pruebas unitarias de esquemas Zod en `shared` y determinismo del seed.
+- [x] Verificación de aceptación: Base de datos poblada de forma consistente tras `docker compose up` y pruebas funcionales en verde.
 
 ### Fase 2: Dominio y Casos de Uso (Arquitectura Limpia)
 

@@ -7,11 +7,212 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Modelo inicial de verificación de salud y base
-model SystemCheck {
+enum HallFormat {
+  TWO_D   @map("2D")
+  THREE_D @map("3D")
+  IMAX    @map("IMAX")
+  VIP     @map("VIP")
+}
+
+enum SeatType {
+  standard
+  vip
+  accessible
+}
+
+enum FoodCategory {
+  combo
+  popcorn
+  drink
+  candy
+}
+
+enum OrderStatus {
+  DRAFT
+  SEATS_HELD
+  PAYMENT_PENDING
+  CONFIRMED
+  EXPIRED
+  FAILED
+  CANCELLED
+}
+
+model User {
   id        String   @id @default(uuid())
-  key       String   @unique
-  value     String
+  name      String
+  email     String   @unique
+  phone     String?
+  orders    Order[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Movie {
+  id            String     @id @default(uuid())
+  title         String
+  originalTitle String?
+  director      String
+  cast          String[]
+  synopsis      String
+  genres        String[]
+  durationMin   Int
+  rating        String
+  language      String
+  subtitles     String[]
+  releaseDate   DateTime
+  posterUrl     String
+  trailerUrl    String?
+  score         Float
+  country       String
+  year          Int
+  showtimes     Showtime[]
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  @@map("movies")
+}
+
+model Cinema {
+  id        String   @id @default(uuid())
+  name      String
+  address   String
+  city      String
+  timezone  String   @default("America/Argentina/Buenos_Aires")
+  amenities String[]
+  halls     Hall[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("cinemas")
+}
+
+model Hall {
+  id        String     @id @default(uuid())
+  cinemaId  String
+  cinema    Cinema     @relation(fields: [cinemaId], references: [id], onDelete: Cascade)
+  name      String
+  format    HallFormat @default(TWO_D)
+  rows      Int
+  cols      Int
+  seats     Seat[]
+  showtimes Showtime[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@map("halls")
+}
+
+model Seat {
+  id         String      @id @default(uuid())
+  hallId     String
+  hall       Hall        @relation(fields: [hallId], references: [id], onDelete: Cascade)
+  row        String
+  number     Int
+  type       SeatType    @default(standard)
+  x          Int
+  y          Int
+  orderSeats OrderSeat[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  @@unique([hallId, row, number])
+  @@map("seats")
+}
+
+model Showtime {
+  id                   String      @id @default(uuid())
+  movieId              String
+  movie                Movie       @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  hallId               String
+  hall                 Hall        @relation(fields: [hallId], references: [id], onDelete: Cascade)
+  startsAt             DateTime
+  language             String
+  format               HallFormat  @default(TWO_D)
+  priceStandardCents   Int
+  priceVipCents        Int
+  priceAccessibleCents Int
+  orders               Order[]
+  orderSeats           OrderSeat[]
+  createdAt            DateTime    @default(now())
+  updatedAt            DateTime    @updatedAt
+
+  @@map("showtimes")
+}
+
+model FoodItem {
+  id          String       @id @default(uuid())
+  name        String
+  description String
+  category    FoodCategory
+  priceCents  Int
+  imageUrl    String
+  sizes       String[]
+  available   Boolean      @default(true)
+  orderFoods  OrderFood[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@map("food_items")
+}
+
+model TicketType {
+  id          String      @id
+  label       String
+  discountPct Int
+  orderSeats  OrderSeat[]
+
+  @@map("ticket_types")
+}
+
+model Order {
+  id             String      @id @default(uuid())
+  userId         String
+  user           User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  showtimeId     String
+  showtime       Showtime    @relation(fields: [showtimeId], references: [id], onDelete: Restrict)
+  status         OrderStatus @default(DRAFT)
+  subtotalCents  Int
+  feesCents      Int
+  totalCents     Int
+  holdExpiresAt  DateTime
+  idempotencyKey String      @unique
+  qrCode         String?
+  seats          OrderSeat[]
+  food           OrderFood[]
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  @@map("orders")
+}
+
+model OrderSeat {
+  id           String     @id @default(uuid())
+  orderId      String
+  order        Order      @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  showtimeId   String
+  showtime     Showtime   @relation(fields: [showtimeId], references: [id], onDelete: Restrict)
+  seatId       String
+  seat         Seat       @relation(fields: [seatId], references: [id], onDelete: Restrict)
+  ticketTypeId String
+  ticketType   TicketType @relation(fields: [ticketTypeId], references: [id], onDelete: Restrict)
+  priceCents   Int
+
+  // Regla crítica anti doble-venta
+  @@unique([showtimeId, seatId])
+  @@map("order_seats")
+}
+
+model OrderFood {
+  id         String   @id @default(uuid())
+  orderId    String
+  order      Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  foodItemId String
+  foodItem   FoodItem @relation(fields: [foodItemId], references: [id], onDelete: Restrict)
+  size       String?
+  qty        Int
+  priceCents Int
+
+  @@map("order_foods")
 }
