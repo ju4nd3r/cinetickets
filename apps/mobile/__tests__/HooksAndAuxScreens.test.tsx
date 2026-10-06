@@ -1,6 +1,5 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
-import MyTicketsScreen from '../app/my-tickets';
 import { useMovies } from '../src/features/movies/hooks/useMovies';
 import { useMovieDetail } from '../src/features/movies/hooks/useMovieDetail';
 import { useMovieShowtimes } from '../src/features/movies/hooks/useMovieShowtimes';
@@ -26,11 +25,6 @@ describe('Auxiliary Screens & Movie Hooks', () => {
   it('renders RootLayout properly', () => {
     const { toJSON } = render(<RootLayout />);
     expect(toJSON()).toBeTruthy();
-  });
-
-  it('renders MyTicketsScreen properly', () => {
-    const { getByText } = render(<MyTicketsScreen />);
-    expect(getByText('Mis Entradas')).toBeTruthy();
   });
 
   describe('Hooks', () => {

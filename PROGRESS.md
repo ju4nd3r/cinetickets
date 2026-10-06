@@ -2,9 +2,10 @@
 
 ## Estado General
 
-- **Fase Actual:** Fase 7 (App Móvil: Checkout y Mis Entradas)
+- **Fase Actual:** Fase 8 (Pruebas E2E, Accesibilidad y Entrega)
 - **Repositorio objetivo:** `https://github.com/ju4nd3r/cinetickets`
-- **Estado CI:** Fase 5 en verde en main
+- **Estado CI:** Fase 6 en verde en main
+
 
 ---
 
@@ -75,12 +76,12 @@
 
 ### Fase 7: App Móvil - Checkout y Mis Entradas
 
-- [ ] Formulario de comprador con React Hook Form + Zod.
-- [ ] Desglose detallado de precios (entradas, comida, cargo de servicio 5%, total).
-- [ ] Pasarela de pago simulada y manejo de estados (`SEAT_UNAVAILABLE`, `HOLD_EXPIRED`, `PAYMENT_DECLINED`).
-- [ ] Pantalla de confirmación con código QR (`react-native-qrcode-svg`).
-- [ ] Pantalla "Mis Entradas" con pestañas Próximas y Pasadas.
-- [ ] Pruebas unitarias y de integración de la UI.
+- [x] Formulario de comprador con React Hook Form + Zod.
+- [x] Desglose detallado de precios (entradas, comida, cargo de servicio 5%, total).
+- [x] Pasarela de pago simulada y manejo de estados (`SEAT_UNAVAILABLE`, `HOLD_EXPIRED`, `PAYMENT_DECLINED`).
+- [x] Pantalla de confirmación con código QR (`react-native-qrcode-svg`).
+- [x] Pantalla "Mis Entradas" con pestañas Próximas y Pasadas.
+- [x] Pruebas unitarias y de integración de la UI.
 
 ### Fase 8: Pruebas E2E, Accesibilidad y Entrega
 
@@ -98,3 +99,5 @@
 - _Fase 4 (Holds, Órdenes y Pago)_: Implementación de `RedisSeatHoldStore` con TTL de 8 min, `PrismaOrderRepository` con control de concurrencia y restricción única anti-doble reserva (`UNIQUE(showtimeId, seatId)`), pasarela de pago determinística (`0000` -> rechazo, `1111` -> error de red, resto -> aprobada con código QR), soporte de clave de idempotencia (`Idempotency-Key`), endpoints `POST /showtimes/:id/holds`, `DELETE /holds/:id`, `POST /orders`, `POST /orders/:id/pay`, `GET /orders` y `GET /orders/:id`. Cobertura total de pruebas funcionales 4 a 11 en verde.
 - _Fase 5 (App Móvil: Cartelera y Detalle)_: Implementación de `ApiClient` tipado con validación Zod de respuestas y manejo estructurado de `ApiError`, integración de TanStack Query con hooks dedicados (`useMovies`, `useMovieDetail`, `useMovieShowtimes`), componentes accesibles (`MovieCard`, `FilterChips`, `SearchBar`, `ShowtimeSelector`), pantallas de Cartelera y Detalle de Película con manejo de loading, error con reintento, estado vacío, tráiler y grilla de cines con precios visibles por asiento. Cobertura de pruebas Jest en móvil alcanzada al ~89% (superando umbral de 70%).
 - _Fase 6 (App Móvil: Selección de Asientos y Snacks)_: Implementación del store global `useBookingStore` en Zustand con límite de 10 asientos, validación de hold atómico en backend, componente `SeatMap` con pantalla y leyenda interactiva, selector de tipos de entrada (`TicketTypeSelector`) con descuento por persona (Adulto 0%, Niño 30%, Senior 25%, Estudiante 15%), temporizador regresivo de 8 min `HoldTimer`, catálogo de snacks con categorías y selector de cantidades `FoodCatalog`, pantallas `app/booking/[showtimeId].tsx` y `app/booking/food.tsx`. Cobertura móvil sostenida en >86% (líneas 87.2%).
+- _Fase 7 (App Móvil: Checkout y Mis Entradas)_: Implementación del componente de desglose `PriceBreakdown` (entradas, descuentos, comida, cargo de servicio 5%, total), pantalla de Checkout `app/booking/checkout.tsx` con formulario validado de comprador y tarjeta simulada (botones rápidos para tarjeta válida y tarjeta con rechazo 0000), generación de claves de idempotencia (`ord-...` y `pay-...`), manejo de errores de dominio (`PAYMENT_DECLINED`, `HOLD_EXPIRED`, `SEAT_UNAVAILABLE`), pantalla de confirmación `app/booking/confirmation.tsx` con generación de código QR interactivo (`react-native-qrcode-svg`), y pantalla `app/my-tickets.tsx` con pestañas de funciones próximas y pasadas y modal de boleto digital con código QR. Cobertura de pruebas móviles superando ampliamente el umbral: 85.02% en líneas, 11 suites y 43 pruebas unitarias e integración en verde.
+

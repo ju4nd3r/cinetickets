@@ -28,7 +28,6 @@ export default function BookingScreen() {
     toggleSeat,
     seatTicketTypes,
     setTicketTypeForSeat,
-    holdId,
     holdExpiresAt,
     setHold,
     clearHold,
