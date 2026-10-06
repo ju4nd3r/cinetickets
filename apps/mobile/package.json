@@ -10,8 +10,8 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint \"**/*.{ts,tsx}\"",
     "lint:fix": "eslint \"**/*.{ts,tsx}\" --fix",
-    "test": "jest",
-    "test:coverage": "jest --coverage",
+    "test": "jest --forceExit",
+    "test:coverage": "jest --coverage --forceExit",
     "test:e2e": "echo 'Run: maestro test .maestro/all-flows.yaml'"
   },
   "dependencies": {

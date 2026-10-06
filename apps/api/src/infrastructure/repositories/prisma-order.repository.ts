@@ -172,30 +172,7 @@ export class PrismaOrderRepository implements OrderRepository {
     };
   }
 
-  private defaultIncludes = {
-    seats: {
-      include: {
-        seat: true,
-        ticketType: true,
-      },
-    },
-    food: {
-      include: {
-        foodItem: true,
-      },
-    },
-    showtime: {
-      include: {
-        movie: true,
-        hall: {
-          include: {
-            cinema: true,
-          },
-        },
-      },
-    },
-    user: true,
-  };
+  private defaultIncludes = orderIncludes.include;
 
   async create(data: CreateOrderData): Promise<Order> {
     try {

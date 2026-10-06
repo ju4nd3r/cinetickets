@@ -2,9 +2,9 @@
 
 ## Estado General
 
-- **Fase Actual:** Fase 5 (App Móvil: Cartelera y Detalle)
+- **Fase Actual:** Fase 6 (App Móvil: Asientos y Comida)
 - **Repositorio objetivo:** `https://github.com/ju4nd3r/cinetickets`
-- **Estado CI:** Fase 3 en verde en main
+- **Estado CI:** Fase 4 en verde en main
 
 ---
 
@@ -58,12 +58,12 @@
 
 ### Fase 5: App Móvil - Cartelera y Detalle
 
-- [ ] Configuración de `ApiClient` tipado con validación Zod y manejo de errores.
-- [ ] Configuración de TanStack Query.
-- [ ] Pantalla de cartelera (búsqueda, filtros por género, formato, cine).
-- [ ] Pantalla de detalle de película (metadatos completos, tráiler, ficha técnica).
-- [ ] Lista de funciones agrupadas por cine con formato y precios visibles.
-- [ ] Pruebas unitarias de componentes y hooks.
+- [x] Configuración de `ApiClient` tipado con validación Zod y manejo de errores.
+- [x] Configuración de TanStack Query.
+- [x] Pantalla de cartelera (búsqueda, filtros por género, formato, cine).
+- [x] Pantalla de detalle de película (metadatos completos, tráiler, ficha técnica).
+- [x] Lista de funciones agrupadas por cine con formato y precios visibles.
+- [x] Pruebas unitarias de componentes y hooks (cobertura ~89% superando el umbral de 70%).
 
 ### Fase 6: App Móvil - Selección de Asientos y Snacks
 
@@ -96,3 +96,4 @@
 - _Inicio del proyecto_: Creación del plan detallado en `PROGRESS.md` conforme al prompt.
 - _Fase 3 (API de Catálogo)_: Implementación de repositorios Prisma (`PrismaMovieRepository`, `PrismaShowtimeRepository`, `PrismaCatalogRepository`), endpoints Fastify documentados con OpenAPI en `/docs`, fallback seguro de variables de entorno de prueba para Vitest, y validación funcional contra PostgreSQL 16 y Redis 7 reales.
 - _Fase 4 (Holds, Órdenes y Pago)_: Implementación de `RedisSeatHoldStore` con TTL de 8 min, `PrismaOrderRepository` con control de concurrencia y restricción única anti-doble reserva (`UNIQUE(showtimeId, seatId)`), pasarela de pago determinística (`0000` -> rechazo, `1111` -> error de red, resto -> aprobada con código QR), soporte de clave de idempotencia (`Idempotency-Key`), endpoints `POST /showtimes/:id/holds`, `DELETE /holds/:id`, `POST /orders`, `POST /orders/:id/pay`, `GET /orders` y `GET /orders/:id`. Cobertura total de pruebas funcionales 4 a 11 en verde.
+- _Fase 5 (App Móvil: Cartelera y Detalle)_: Implementación de `ApiClient` tipado con validación Zod de respuestas y manejo estructurado de `ApiError`, integración de TanStack Query con hooks dedicados (`useMovies`, `useMovieDetail`, `useMovieShowtimes`), componentes accesibles (`MovieCard`, `FilterChips`, `SearchBar`, `ShowtimeSelector`), pantallas de Cartelera y Detalle de Película con manejo de loading, error con reintento, estado vacío, tráiler y grilla de cines con precios visibles por asiento. Cobertura de pruebas Jest en móvil alcanzada al ~89% (superando umbral de 70%).
