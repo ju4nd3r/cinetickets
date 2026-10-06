@@ -31,6 +31,9 @@ jobs:
       - name: Prisma Generate
         run: pnpm --filter @cinetickets/api prisma:generate
 
+      - name: Build Shared
+        run: pnpm --filter @cinetickets/shared build
+
       - name: Typecheck
         run: pnpm typecheck
 
