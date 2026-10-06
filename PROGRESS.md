@@ -2,9 +2,9 @@
 
 ## Estado General
 
-- **Fase Actual:** Fase 3 (API de Catálogo)
+- **Fase Actual:** Fase 4 (Holds, Órdenes y Pago)
 - **Repositorio objetivo:** `https://github.com/ju4nd3r/cinetickets`
-- **Estado CI:** Fase 0 en verde
+- **Estado CI:** Fase 2 en verde en main
 
 ---
 
@@ -42,10 +42,10 @@
 
 ### Fase 3: API de Catálogo
 
-- [ ] Implementación de repositorios de infraestructura con Prisma.
-- [ ] Rutas HTTP en Fastify: `/movies`, `/movies/:id`, `/movies/:id/showtimes`, `/showtimes/:id/seats`, `/food`, `/ticket-types`.
-- [ ] Documentación OpenAPI Swagger en `/docs`.
-- [ ] Pruebas funcionales contra PostgreSQL y Redis reales (pruebas 1, 2, 3, 11).
+- [x] Implementación de repositorios de infraestructura con Prisma.
+- [x] Rutas HTTP en Fastify: `/movies`, `/movies/:id`, `/movies/:id/showtimes`, `/showtimes/:id/seats`, `/food`, `/ticket-types`.
+- [x] Documentación OpenAPI Swagger en `/docs`.
+- [x] Pruebas funcionales contra PostgreSQL y Redis reales (pruebas 1, 2, 3, 11).
 
 ### Fase 4: Holds, Órdenes y Pago
 
@@ -94,4 +94,4 @@
 ## Registro de Decisiones y Cambios
 
 - _Inicio del proyecto_: Creación del plan detallado en `PROGRESS.md` conforme al prompt.
-- _GitHub CLI_: Verificada autenticación previa con cuenta `ju4nd3r`.
+- _Fase 3 (API de Catálogo)_: Implementación de repositorios Prisma (`PrismaMovieRepository`, `PrismaShowtimeRepository`, `PrismaCatalogRepository`), endpoints Fastify documentados con OpenAPI en `/docs`, fallback seguro de variables de entorno de prueba para Vitest, y validación funcional contra PostgreSQL 16 y Redis 7 reales.

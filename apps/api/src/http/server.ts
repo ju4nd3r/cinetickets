@@ -3,6 +3,10 @@ import cors from '@fastify/cors';
 import swagger from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
 import { healthRoutes } from './routes/health.js';
+import { movieRoutes } from './routes/movies.js';
+import { showtimeRoutes } from './routes/showtimes.js';
+import { catalogRoutes } from './routes/catalog.js';
+import { DomainError } from '../domain/errors.js';
 
 export async function buildApp() {
   const app = fastify({
@@ -26,6 +30,12 @@ export async function buildApp() {
           description: 'Servidor Local',
         },
       ],
+      tags: [
+        { name: 'Películas', description: 'Cartelera y detalles' },
+        { name: 'Funciones', description: 'Horarios, cines y salas' },
+        { name: 'Catálogo', description: 'Snacks y tipos de entrada' },
+        { name: 'Salud', description: 'Verificación del estado del servicio' },
+      ],
     },
   });
 
@@ -39,6 +49,16 @@ export async function buildApp() {
 
   // Global error handler
   app.setErrorHandler((error, _request, reply) => {
+    if (error instanceof DomainError) {
+      return reply.status(error.statusCode).send({
+        error: {
+          code: error.code,
+          message: error.message,
+          details: error.details,
+        },
+      });
+    }
+
     app.log.error(error);
     const statusCode = error.statusCode || 500;
     const errorCode =
@@ -60,10 +80,13 @@ export async function buildApp() {
   // Health route directly
   await app.register(healthRoutes);
 
-  // Health and API routes under /api/v1 prefix
+  // All API routes under /api/v1 prefix
   await app.register(
     async (v1) => {
       await v1.register(healthRoutes);
+      await v1.register(movieRoutes);
+      await v1.register(showtimeRoutes);
+      await v1.register(catalogRoutes);
     },
     { prefix: '/api/v1' },
   );
