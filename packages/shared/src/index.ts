@@ -302,3 +302,18 @@ export const CinemaShowtimesGroupSchema = z.object({
   showtimes: z.array(ShowtimeSchema),
 });
 export type CinemaShowtimesGroup = z.infer<typeof CinemaShowtimesGroupSchema>;
+
+/**
+ * Calculates seat price after applying ticket discount percentage.
+ * Rounded to nearest integer cents.
+ */
+export function calculateSeatPrice(basePriceCents: number, discountPct: number): number {
+  if (basePriceCents < 0) {
+    throw new Error('El precio base del asiento no puede ser negativo');
+  }
+  if (discountPct < 0 || discountPct > 100) {
+    throw new Error('El porcentaje de descuento debe estar entre 0 y 100');
+  }
+  const multiplier = 1 - discountPct / 100;
+  return Math.round(basePriceCents * multiplier);
+}

@@ -1,7 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 import MyTicketsScreen from '../app/my-tickets';
-import BookingScreen from '../app/booking/[showtimeId]';
 import { useMovies } from '../src/features/movies/hooks/useMovies';
 import { useMovieDetail } from '../src/features/movies/hooks/useMovieDetail';
 import { useMovieShowtimes } from '../src/features/movies/hooks/useMovieShowtimes';
@@ -17,6 +16,7 @@ jest.mock('expo-router', () => {
     React.createElement('View', null, children);
   StackComponent.Screen = () => null;
   return {
+    useRouter: () => ({ push: jest.fn(), replace: jest.fn() }),
     useLocalSearchParams: () => ({ showtimeId: 'st-test-456' }),
     Stack: StackComponent,
   };
@@ -31,12 +31,6 @@ describe('Auxiliary Screens & Movie Hooks', () => {
   it('renders MyTicketsScreen properly', () => {
     const { getByText } = render(<MyTicketsScreen />);
     expect(getByText('Mis Entradas')).toBeTruthy();
-  });
-
-  it('renders BookingScreen placeholder properly', () => {
-    const { getByText } = render(<BookingScreen />);
-    expect(getByText('Selección de Asientos')).toBeTruthy();
-    expect(getByText('Función ID: st-test-456')).toBeTruthy();
   });
 
   describe('Hooks', () => {

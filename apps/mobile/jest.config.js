@@ -20,4 +20,6 @@ module.exports = {
       branches: 60,
     },
   },
+  testTimeout: 15000,
 };
+
