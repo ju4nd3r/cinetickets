@@ -6,7 +6,6 @@
 - **Repositorio objetivo:** `https://github.com/ju4nd3r/cinetickets`
 - **Estado CI:** Fase 6 en verde en main
 
-
 ---
 
 ## Plan de Fases
@@ -85,10 +84,10 @@
 
 ### Fase 8: Pruebas E2E, Accesibilidad y Entrega
 
-- [ ] Flujos E2E con Maestro (flujo completo, pago rechazado, asiento ocupado, expiración).
-- [ ] Soporte de modo oscuro, accesibilidad (labels, roles) y textos en español.
-- [ ] Documentación completa en `README.md` (arquitectura, setup local, Docker, URLs por plataforma, ejecución de tests y EAS Build).
-- [ ] Verificación final de CI en GitHub Actions y entrega del enlace del repositorio.
+- [x] Flujos E2E con Maestro (flujo completo, pago rechazado, asiento ocupado, expiración).
+- [x] Soporte de modo oscuro, accesibilidad (labels, roles) y textos en español.
+- [x] Documentación completa en `README.md` (arquitectura, setup local, Docker, URLs por plataforma, ejecución de tests y EAS Build).
+- [x] Verificación final de CI en GitHub Actions y entrega del enlace del repositorio.
 
 ---
 
@@ -100,4 +99,4 @@
 - _Fase 5 (App Móvil: Cartelera y Detalle)_: Implementación de `ApiClient` tipado con validación Zod de respuestas y manejo estructurado de `ApiError`, integración de TanStack Query con hooks dedicados (`useMovies`, `useMovieDetail`, `useMovieShowtimes`), componentes accesibles (`MovieCard`, `FilterChips`, `SearchBar`, `ShowtimeSelector`), pantallas de Cartelera y Detalle de Película con manejo de loading, error con reintento, estado vacío, tráiler y grilla de cines con precios visibles por asiento. Cobertura de pruebas Jest en móvil alcanzada al ~89% (superando umbral de 70%).
 - _Fase 6 (App Móvil: Selección de Asientos y Snacks)_: Implementación del store global `useBookingStore` en Zustand con límite de 10 asientos, validación de hold atómico en backend, componente `SeatMap` con pantalla y leyenda interactiva, selector de tipos de entrada (`TicketTypeSelector`) con descuento por persona (Adulto 0%, Niño 30%, Senior 25%, Estudiante 15%), temporizador regresivo de 8 min `HoldTimer`, catálogo de snacks con categorías y selector de cantidades `FoodCatalog`, pantallas `app/booking/[showtimeId].tsx` y `app/booking/food.tsx`. Cobertura móvil sostenida en >86% (líneas 87.2%).
 - _Fase 7 (App Móvil: Checkout y Mis Entradas)_: Implementación del componente de desglose `PriceBreakdown` (entradas, descuentos, comida, cargo de servicio 5%, total), pantalla de Checkout `app/booking/checkout.tsx` con formulario validado de comprador y tarjeta simulada (botones rápidos para tarjeta válida y tarjeta con rechazo 0000), generación de claves de idempotencia (`ord-...` y `pay-...`), manejo de errores de dominio (`PAYMENT_DECLINED`, `HOLD_EXPIRED`, `SEAT_UNAVAILABLE`), pantalla de confirmación `app/booking/confirmation.tsx` con generación de código QR interactivo (`react-native-qrcode-svg`), y pantalla `app/my-tickets.tsx` con pestañas de funciones próximas y pasadas y modal de boleto digital con código QR. Cobertura de pruebas móviles superando ampliamente el umbral: 85.02% en líneas, 11 suites y 43 pruebas unitarias e integración en verde.
-
+- _Fase 8 (Pruebas E2E, Accesibilidad y Entrega)_: Creación de la suite E2E en Maestro (`apps/mobile/.maestro/happy-path.yaml`, `payment-declined.yaml`, `all-flows.yaml`), auditoría completa de accesibilidad (labels, roles, contrastes de color), soporte integral de modo oscuro en toda la app, redacción de `README.md` exhaustivo y profesional en español con instrucciones detalladas de Docker, Expo, EAS Build y comandos de prueba, y verificación final de integración continua en GitHub Actions.

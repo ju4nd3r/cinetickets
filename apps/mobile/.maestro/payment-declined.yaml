@@ -1,0 +1,32 @@
+appId: host.exp.exponent
+---
+# Flujo E2E: Tarjeta rechazada determinísticamente (terminación 0000)
+- launchApp
+- assertVisible: 'CineTickets'
+
+# Seleccionar primera película
+- tapOn:
+    text: '.*'
+    index: 0
+
+# Seleccionar función
+- tapOn:
+    text: '.*'
+    index: 1
+
+# Seleccionar asiento y continuar
+- tapOn:
+    text: '1'
+    index: 0
+- tapOn: 'Continuar ▶'
+
+# Saltar comida
+- tapOn: 'Saltar comida'
+
+# Checkout: llenar tarjeta con rechazo simulado
+- assertVisible: 'Resumen y Pago'
+- tapOn: '✕ Termina 0000 (Rechazo)'
+- tapOn: 'Pagar Pedido'
+
+# Verificar mensaje de error del banco
+- assertVisible: 'Pago rechazado por el banco emisor (Tarjeta terminada en 0000).'
