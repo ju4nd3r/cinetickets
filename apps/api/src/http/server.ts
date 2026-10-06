@@ -6,7 +6,10 @@ import { healthRoutes } from './routes/health.js';
 import { movieRoutes } from './routes/movies.js';
 import { showtimeRoutes } from './routes/showtimes.js';
 import { catalogRoutes } from './routes/catalog.js';
+import { holdRoutes } from './routes/holds.js';
+import { orderRoutes } from './routes/orders.js';
 import { DomainError } from '../domain/errors.js';
+import { ZodError } from 'zod';
 
 export async function buildApp() {
   const app = fastify({
@@ -33,6 +36,9 @@ export async function buildApp() {
       tags: [
         { name: 'Películas', description: 'Cartelera y detalles' },
         { name: 'Funciones', description: 'Horarios, cines y salas' },
+        { name: 'Holds', description: 'Bloqueo temporal de asientos' },
+        { name: 'Órdenes', description: 'Creación y gestión de órdenes' },
+        { name: 'Pagos', description: 'Pasarela de pagos' },
         { name: 'Catálogo', description: 'Snacks y tipos de entrada' },
         { name: 'Salud', description: 'Verificación del estado del servicio' },
       ],
@@ -49,6 +55,16 @@ export async function buildApp() {
 
   // Global error handler
   app.setErrorHandler((error, _request, reply) => {
+    if (error instanceof ZodError) {
+      return reply.status(400).send({
+        error: {
+          code: 'VALIDATION_ERROR',
+          message: error.errors[0]?.message || 'Error de validación en la petición',
+          details: error.flatten(),
+        },
+      });
+    }
+
     if (error instanceof DomainError) {
       return reply.status(error.statusCode).send({
         error: {
@@ -87,6 +103,8 @@ export async function buildApp() {
       await v1.register(movieRoutes);
       await v1.register(showtimeRoutes);
       await v1.register(catalogRoutes);
+      await v1.register(holdRoutes);
+      await v1.register(orderRoutes);
     },
     { prefix: '/api/v1' },
   );

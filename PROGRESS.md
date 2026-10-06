@@ -2,9 +2,9 @@
 
 ## Estado General
 
-- **Fase Actual:** Fase 4 (Holds, Órdenes y Pago)
+- **Fase Actual:** Fase 5 (App Móvil: Cartelera y Detalle)
 - **Repositorio objetivo:** `https://github.com/ju4nd3r/cinetickets`
-- **Estado CI:** Fase 2 en verde en main
+- **Estado CI:** Fase 3 en verde en main
 
 ---
 
@@ -49,12 +49,12 @@
 
 ### Fase 4: Holds, Órdenes y Pago
 
-- [ ] Hold temporal atómico de asientos en Redis con TTL de 8 minutos (`SET key val NX EX 480`).
-- [ ] Endpoint `/showtimes/:id/holds` y `DELETE /holds/:id`.
-- [ ] Endpoint `POST /orders` con `Idempotency-Key` y máquina de estados.
-- [ ] Endpoint `POST /orders/:id/pay` con pasarela simulada determinística (`0000`, `1111`) y generación de código QR.
-- [ ] Endpoints `GET /orders` y `GET /orders/:id`.
-- [ ] Pruebas funcionales de concurrencia, expiración, idempotencia y pagos (pruebas 4 a 10).
+- [x] Hold temporal atómico de asientos en Redis con TTL de 8 minutos (`SET key val NX EX 480`).
+- [x] Endpoint `/showtimes/:id/holds` y `DELETE /holds/:id`.
+- [x] Endpoint `POST /orders` con `Idempotency-Key` y máquina de estados.
+- [x] Endpoint `POST /orders/:id/pay` con pasarela simulada determinística (`0000`, `1111`) y generación de código QR.
+- [x] Endpoints `GET /orders` y `GET /orders/:id`.
+- [x] Pruebas funcionales de concurrencia, expiración, idempotencia y pagos (pruebas 4 a 10).
 
 ### Fase 5: App Móvil - Cartelera y Detalle
 
@@ -95,3 +95,4 @@
 
 - _Inicio del proyecto_: Creación del plan detallado en `PROGRESS.md` conforme al prompt.
 - _Fase 3 (API de Catálogo)_: Implementación de repositorios Prisma (`PrismaMovieRepository`, `PrismaShowtimeRepository`, `PrismaCatalogRepository`), endpoints Fastify documentados con OpenAPI en `/docs`, fallback seguro de variables de entorno de prueba para Vitest, y validación funcional contra PostgreSQL 16 y Redis 7 reales.
+- _Fase 4 (Holds, Órdenes y Pago)_: Implementación de `RedisSeatHoldStore` con TTL de 8 min, `PrismaOrderRepository` con control de concurrencia y restricción única anti-doble reserva (`UNIQUE(showtimeId, seatId)`), pasarela de pago determinística (`0000` -> rechazo, `1111` -> error de red, resto -> aprobada con código QR), soporte de clave de idempotencia (`Idempotency-Key`), endpoints `POST /showtimes/:id/holds`, `DELETE /holds/:id`, `POST /orders`, `POST /orders/:id/pay`, `GET /orders` y `GET /orders/:id`. Cobertura total de pruebas funcionales 4 a 11 en verde.
