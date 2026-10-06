@@ -1,0 +1,5 @@
+appId: host.exp.exponent
+---
+# Suite Maestro E2E Completa de CineTickets
+- runFlow: happy-path.yaml
+- runFlow: payment-declined.yaml

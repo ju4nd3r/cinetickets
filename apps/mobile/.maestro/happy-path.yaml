@@ -1,0 +1,55 @@
+appId: host.exp.exponent
+---
+# Flujo Completo E2E: Compra exitosa desde cartelera hasta confirmación y QR en Mis Entradas
+- launchApp
+- assertVisible: 'CineTickets'
+
+# 1. Cartelera y filtrado
+- tapOn:
+    id: 'movie-search-input'
+- inputText: 'Cyberpunk'
+- hideKeyboard
+- assertVisible: 'Cyberpunk: Renacimiento 2099'
+
+# 2. Detalle de película y ficha técnica
+- tapOn: 'Cyberpunk: Renacimiento 2099'
+- assertVisible: 'Sinopsis'
+- assertVisible: 'Funciones Disponibles'
+
+# 3. Selección de función
+- tapOn:
+    text: '.*'
+    index: 0
+
+# 4. Mapa de sala y selección de asientos
+- assertVisible: 'PANTALLA'
+- assertVisible: '0 / 10 seleccionados'
+- tapOn:
+    text: '1'
+    index: 0
+- assertVisible: '1 / 10 seleccionados'
+- tapOn: 'Continuar ▶'
+
+# 5. Catálogo de comida y bebidas
+- assertVisible: 'Snacks y Bebidas'
+- tapOn: 'Saltar comida'
+
+# 6. Checkout y pago
+- assertVisible: 'Resumen y Pago'
+- assertVisible: 'Resumen del Pedido'
+- tapOn: '✓ Tarjeta Válida'
+- tapOn: 'Pagar Pedido'
+
+# 7. Confirmación con código QR
+- assertVisible: '¡Compra Confirmada!'
+- assertVisible: 'Presenta este código en el acceso de la sala para escanear tus boletos.'
+- tapOn: 'Ver en Mis Entradas'
+
+# 8. Mis Entradas y visualización de boleto
+- assertVisible: 'Mis Entradas'
+- assertVisible: 'Próximas'
+- tapOn:
+    text: 'Ver QR 📱'
+    index: 0
+- assertVisible: 'Boleto Digital'
+- tapOn: 'Cerrar'
