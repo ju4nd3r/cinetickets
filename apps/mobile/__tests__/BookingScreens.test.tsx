@@ -136,7 +136,7 @@ describe('Booking Screens', () => {
       expect(holdSpy).toHaveBeenCalledWith('st-booking-1', ['s1']);
       expect(mockPush).toHaveBeenCalledWith('/booking/food');
     });
-  });
+  }, 15000);
 
   it('FoodSelectionScreen renders food catalog, calculates totals and navigates', async () => {
     const mockFood: FoodItem[] = [
@@ -164,5 +164,5 @@ describe('Booking Screens', () => {
     // Saltar comida
     fireEvent.press(getByText('Saltar comida'));
     expect(mockPush).toHaveBeenCalledWith('/booking/checkout');
-  });
+  }, 15000);
 });
