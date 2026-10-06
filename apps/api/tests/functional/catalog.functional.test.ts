@@ -15,7 +15,7 @@ describe('Functional: Catalog & Movies API', () => {
   });
 
   afterAll(async () => {
-    await app.close();
+    if (app) await app.close();
     await prisma.$disconnect();
     if (redis.status === 'ready') {
       await redis.quit();
